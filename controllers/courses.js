@@ -1,7 +1,7 @@
 const { instance } = require("../index");
 const Courses = require("../models/Courses");
 const Lecture = require("../models/Lecture");
-const Payment = require("../models/Payment");
+const Payment = require("../models/payment")
 const User = require("../models/User");
 const crypto = require("crypto")
 
@@ -91,12 +91,12 @@ exports.getMyCourses = async(req, res) => {
     try{
         const courses = await Courses.find({_id: req.user.subscription})
 
-        res.json({
+        return res.json({
             courses,
         })
     }
     catch(error){
-        res.json({
+        return res.json({
             message: "error in getting my course"
         })
     }

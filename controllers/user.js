@@ -110,13 +110,13 @@ exports.loginUser = async(req, res) => {
         const user = await User.findOne({email});
 
         if(!user){
-            res.json({
+            return res.json({
                 message:"No user With this email"
             })
         }
 
         if(!email || !password){
-            res.json({
+            return res.json({
                 message:"Enter correct Password"
             })
         }
@@ -124,7 +124,7 @@ exports.loginUser = async(req, res) => {
         const userPassword = await bcrypt.compare(password, user.password);
 
         if(!userPassword){
-            req.json({
+            return req.json({
                 message:"Wrong Password"
             })
         }
@@ -133,14 +133,14 @@ exports.loginUser = async(req, res) => {
             expiresIn:"1hr"
         })
 
-        res.json({
+        return res.json({
             message:`Welcome back ${user.name}`,
             token,
             user
         })
     }
     catch(error){
-        res.json({
+        return res.json({
             message:"Error in logIn"
         })
     }
@@ -149,12 +149,12 @@ exports.loginUser = async(req, res) => {
 exports.myProfile = async(req, res) => {
     try{
         const user = await User.findById(req.user._id)
-        res.json({
+        return res.json({
             user
         })
     }
     catch(error){
-        res.json({
+        return res.json({
             message:"profile me dikkat"
         })
     }
