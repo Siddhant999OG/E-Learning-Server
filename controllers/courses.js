@@ -108,7 +108,7 @@ exports.checkout = async(req, res) => {
         const course = await Courses.findById(req.params.id);
 
         if(user.subscription.includes(course._id)){
-            res.json({
+            return res.json({
                 message : "You have this course Already"
             })
         }
@@ -120,7 +120,7 @@ exports.checkout = async(req, res) => {
 
         const order = await instance.orders.create(options);
 
-        res.json({
+        return res.json({
             order,
             course
         })
@@ -170,7 +170,7 @@ exports.paymentVerification = async (req, res) => {
             user.subscription.push(course._id);
             await user.save();
         
-            res.status(200).json({
+            return res.status(200).json({
                 message: "Course Purchased Successfully",
             });
         } else {
@@ -180,7 +180,7 @@ exports.paymentVerification = async (req, res) => {
         }
     } catch (error) {
         console.error("Error in payment verification:", error); // Log the error
-        res.status(500).json({
+        return res.status(500).json({
             message: "Error in payment verification",
         });
     }
